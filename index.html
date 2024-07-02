@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Adivinanza de Números</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .game-container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Juego de Adivinanza de Números</h1>
+        <p id="message">Adivina un número entre 1 y 100</p>
+        <input type="number" id="guess" min="1" max="100">
+        <button id="submit">Adivinar</button>
+        <p id="attempts">Intentos: 0</p>
+        <button id="reset">Reiniciar Juego</button>
+    </div>
+    <script>
+        let secretNumber;
+        let attempts;
+
+        function init() {
+            secretNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            document.getElementById('message').textContent = 'Adivina un número entre 1 y 100';
+            document.getElementById('attempts').textContent = 'Intentos: 0';
+            document.getElementById('guess').value = '';
+        }
+
+        function checkGuess() {
+            const guess = Number(document.getElementById('guess').value);
+            attempts++;
+            document.getElementById('attempts').textContent = `Intentos: ${attempts}`;
+
+            if (guess === secretNumber) {
+                document.getElementById('message').textContent = `¡Felicidades! Adivinaste el número en ${attempts} intentos.`;
+            } else if (guess < secretNumber) {
+                document.getElementById('message').textContent = 'El número es mayor.';
+            } else {
+                document.getElementById('message').textContent = 'El número es menor.';
+            }
+        }
+
+        document.getElementById('submit').addEventListener('click', checkGuess);
+        document.getElementById('reset').addEventListener('click', init);
+
+        // Inicializamos el juego al cargar la página
+        init();
+    </script>
+</body>
+</html>
